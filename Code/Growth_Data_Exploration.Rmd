@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 
-library(gtools) #testing
+library(gtools) #testing #unneeded
 
 ```
 
@@ -91,6 +91,38 @@ Rainbowmussel %>%
 
 boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
 ```
+```{r}
+
+Fatmucket=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea")   #come back to
+unique(Fatmucket$Tox_conc)
+Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
+
+Rainbowmussel=ToxGrowth %>%
+  filter(Species == "Villosa iris")
+unique(Rainbowmussel$Tox_conc)
+Rainbowmussel$Tox_conc = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
+
+Scuds=ToxGrowth %>%
+  filter(Species == "Hyalella azteca")
+unique(Scuds$Tox_conc)
+Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
+
+Fatheadminnow=ToxGrowth %>%
+  filter(Species == "Pimephales promelas")
+unique(Fatheadminnow$Tox_conc)
+Fatheadminnow$Tox_conc = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
+
+Rainbowtrout=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss")   #come back to
+unique(Rainbowtrout$Tox_conc)
+Rainbowtrout$Tox_conc = factor(Rainbowtrout$Tox_conc, levels = c())
+
+Midge=ToxGrowth %>%
+  filter(Species == "Chironomus dilutus")
+unique(Midge$Tox_conc)
+Midge$Tox_conc = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
+```
 
 ```{r}
 ToxGrowth %>%
@@ -108,31 +140,28 @@ Rainbowmussel %>%
   ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
-ToxGrowth %>%
-  filter(Species == "Hyalella azteca") %>%
+
+Scuds %>%
   replace(is.na(.), 0) %>%
   ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
+  geom_boxplot() 
 
-ToxGrowth %>%
-  filter(Species == "Pimephales promelas") %>%
+Fatheadminnow %>%
   replace(is.na(.), 0) %>%
   ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
+  geom_boxplot() 
 
-ToxGrowth %>%
-  filter(Species == "Oncorhynchus mykiss") %>%
+Rainbowtrout %>%
   replace(is.na(.), 0) %>%
   ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
   geom_point(alpha=.6) 
 
 # above species tested twice (two different years)
 
-ToxGrowth %>%
-  filter(Species == "Chironomus dilutus") %>%
+Midge %>%
   replace(is.na(.), 0) %>%
   ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
+  geom_boxplot() 
 
 
 ```
