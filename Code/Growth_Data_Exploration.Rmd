@@ -1,0 +1,74 @@
+---
+title: "Growth_Data_Exploration"
+output: html_document
+date: "2026-03-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+## Data
+
+Each data pathway is different, so upload the data from your computer 
+
+```{r}
+#View(ToxGrowth)
+```
+
+```{r}
+unique(ToxGrowth$Species)
+```
+
+```{r}
+ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+# above species tested twice (two different years)
+
+ToxGrowth %>%
+  filter(Species == "Villosa iris") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Hyalella azteca") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Pimephales promelas") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+# above species tested twice (two different years)
+
+ToxGrowth %>%
+  filter(Species == "Chironomus dilutus") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+
+```
+
+
+
+
+
+
