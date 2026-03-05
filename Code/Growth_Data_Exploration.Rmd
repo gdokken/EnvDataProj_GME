@@ -72,22 +72,24 @@ ToxGrowth %>%
 ```{r}
 ToxGrowth$Tox_conc=as.character(ToxGrowth$Tox_conc)
 ToxGrowth$Tox_conc=as.numeric(ToxGrowth$Tox_conc)
-class(ToxGrowth$Tox_conc)
+class(ToxGrowth$Tox_conc2)
 ToxGrowth$Tox_conc1=str_sort(ToxGrowth$Tox_conc, numeric = TRUE) #pissing me off
 print(ToxGrowth$Tox_conc)
 print(ToxGrowth$Tox_conc1)
 
 Rainbowmussel=ToxGrowth %>%
-  filter(Species == "Villosa iris") #%>%
-  #factor(ToxGrowth$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000,))
+  filter(Species == "Villosa iris")
 
-ToxGrowth$Tox_conc1 = factor(ToxGrowth$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000,)) #also pissing me off
+Rainbowmussel$Tox_conc3 = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000)) #also pissing me off # i forgot a comma
 
 Rainbowmussel$Tox_conc2=mixedsort(Rainbowmussel$Tox_conc) #not doing what i want
+
 Rainbowmussel %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc2, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc3, y = Dry_rep_wt), ) +
   geom_boxplot() 
+
+boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
 ```
 
 ```{r}
