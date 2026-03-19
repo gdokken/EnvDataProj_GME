@@ -1,0 +1,97 @@
+---
+title: "survival_exploration"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+
+survival = read_csv("C:/Users/ema4p/Downloads/ENVSDATA_data - Survival of test organisms in exposeure bioessay.csv")
+```
+
+```{r}
+survival = survival %>%
+  mutate(survival_rate = Survival/Stocked)
+
+print(unique(survival$Toxicant))
+```
+
+```{r}
+#relationship between concentration of the two toxicants and survival rate
+
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "Survival Rate vs Sulfate Concentration")
+
+survival %>%
+  filter(Toxicant == "Nitrate") %>%
+  filter(Tox_conc < 2500) %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "Survival Rate vs Nitrate Concentration")
+
+#There's an in the Nitrate Concentration that's messing with the regression line, COULD cut it out of the data set or just from the graph unless we feel a need to keep it
+```
+
+```{r}
+#seeing how each species did with Sulfate
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Species)
+```
+
+```{r}
+#seeing how each species did with Nitrate
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Species)
+```
+
+```{r}
+#The concentration, survival and growth data sets all have Days 34, 42 and 55
+
+print(unique(concentration$Day))
+
+print(unique(survival$Day))
+
+print(unique(growth$Day))
+
+print(unique(concentration_chronic$Day))
+
+```
+
+
+```{r}
+#Hyalella Azteca is observed 4 vs 42, Lampsilis is 4 vs 28, Oncorhynkiss is only 55,
+#Pimephales is 7 vs 34, and Villosa iris is 4 vs 28
+
+#starting days are 4 and 7, ending days are 28 and 34
+
+survival %>%
+  mutate(Day = as.factor(Day)) %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Day, y = survival_rate)) +
+  geom_boxplot()
+
+survival %>%
+  mutate(Day = as.factor(Day)) %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Day, y = survival_rate)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+```
+
+
+
+
+

@@ -1,3 +1,4 @@
+ HEAD
 ---
 title: "Growth_Data_Exploration"
 output: html_document
@@ -72,3 +73,176 @@ ToxGrowth %>%
 
 
 
+
+---
+title: "Growth_Data_Exploration"
+output: html_document
+date: "2026-03-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+library(gtools) #testing #unneeded
+
+```
+
+## Data
+
+Each data pathway is different, so upload the data from your computer 
+
+```{r}
+#View(ToxGrowth)
+```
+
+```{r}
+unique(ToxGrowth$Species)
+```
+
+```{r}
+ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+# above species tested twice (two different years)
+
+ToxGrowth %>%
+  filter(Species == "Villosa iris") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Hyalella azteca") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Pimephales promelas") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+# above species tested twice (two different years)
+
+ToxGrowth %>%
+  filter(Species == "Chironomus dilutus") %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+
+```
+
+```{r}
+ToxGrowth$Tox_conc=as.character(ToxGrowth$Tox_conc)
+ToxGrowth$Tox_conc=as.numeric(ToxGrowth$Tox_conc)
+class(ToxGrowth$Tox_conc2)
+ToxGrowth$Tox_conc1=str_sort(ToxGrowth$Tox_conc, numeric = TRUE) #pissing me off
+print(ToxGrowth$Tox_conc)
+print(ToxGrowth$Tox_conc1)
+
+Rainbowmussel=ToxGrowth %>%
+  filter(Species == "Villosa iris")
+
+Rainbowmussel$Tox_conc3 = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000)) #also pissing me off # i forgot a comma
+
+Rainbowmussel$Tox_conc2=mixedsort(Rainbowmussel$Tox_conc) #not doing what i want
+
+Rainbowmussel %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc3, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+
+boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
+```
+```{r}
+
+Fatmucket=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea")   #come back to
+unique(Fatmucket$Tox_conc)
+Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c())
+
+Rainbowmussel=ToxGrowth %>%
+  filter(Species == "Villosa iris")
+unique(Rainbowmussel$Tox_conc)
+Rainbowmussel$Tox_conc = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
+
+Scuds=ToxGrowth %>%
+  filter(Species == "Hyalella azteca")
+unique(Scuds$Tox_conc)
+Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
+
+Fatheadminnow=ToxGrowth %>%
+  filter(Species == "Pimephales promelas")
+unique(Fatheadminnow$Tox_conc)
+Fatheadminnow$Tox_conc = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
+
+Rainbowtrout=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss")   #come back to
+unique(Rainbowtrout$Tox_conc)
+Rainbowtrout$Tox_conc = factor(Rainbowtrout$Tox_conc, levels = c())
+
+Midge=ToxGrowth %>%
+  filter(Species == "Chironomus dilutus")
+unique(Midge$Tox_conc)
+Midge$Tox_conc = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
+```
+
+```{r}
+Fatmucket %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+ # facet_wrap(~Year)
+
+# above species tested twice (two different years)
+
+Rainbowmussel %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+
+
+Scuds %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+
+Fatheadminnow %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+
+Rainbowtrout %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_point(alpha=.6) 
+
+# above species tested twice (two different years)
+
+Midge %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  geom_boxplot() 
+
+
+```
+
+
+
+
+
+
+55f7ecb1427ebe87994efbd2b3b237b27820b7ba
