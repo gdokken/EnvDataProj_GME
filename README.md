@@ -1,10 +1,12 @@
 # EnvDataProj_GME
 
 ### Problem and Framing
-Identifying Approaches
+Identifying Approaches:
+
 The environmental problem we want to address with this project is the impact of chemical runoff into freshwater environments, more specifically the organisms that live in those environments. There are two different ways of approaching this problem with the data we found. One way is analyzing the experimental data of the effects of sodium nitrate (commonly found in fertilizer) and sodium sulfate (commonly found in household products) on different species including unoid mussels, midges, rainbow trout, fathead minnows, gray treefrogs, wood frogs, and freshwater amphipods. The information provided by this analysis would be directed towards governmental and regulatory bodies to inform and influence policy about pollutant runoff. The other approach would analyze the data provided by the EPA to determine which bodies of water and which species are at the most risk of harm from chemical pollutants. This would include looking at the chemical pollutants in freshwater in different spaces, the types of species in those habitats, and the determined threshold for those organisms. This analysis would focus specifically in freshwater in Western Oregon. The purpose of this project would be to identify high risk areas to convince research agencies and conservation groups that further research is critical.
 
-Finalized Problem
+Finalized Problem:
+
 Sodium Nitrate and sodium sulfates are common pollutants is runoff. While sodium nitrate has been classified as an environmental hazard, there is realativly little research on its direct effects on freshwater organisms. The impacts of sodium sulfates are also underresearched. The data from the U.S. Geological Survey is a complex experiment surrounding the impact of these two chemicals on unoid mussels, midges, rainbow trout, fathead minnows, gray treefrogs, wood frogs, and freshwater amphipods. The data examines extreme effects on the organisms while also trying to account for other confounding variables like dissolved oxygen levels and pH. The end goal of this project is to convince governmental agencies like the EPA to regulate the chemical runoff of sodium nitrate and sulfate.
 
 ### Data Exploration
