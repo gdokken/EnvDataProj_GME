@@ -1,0 +1,50 @@
+---
+title: "Fish_Length_Exploration"
+output: html_document
+date: "2026-03-19"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(ggplot2)
+
+```
+
+## Data
+
+```{r}
+#View(LoF)
+```
+
+## Species
+
+```{r}
+unique(LoF$Species)
+
+PP <- LoF %>%
+  filter(Species == "Pimephales promelas") %>%
+  filter(Tox_conc != "3032") %>%
+  filter(Tox_conc != "1567")
+
+# Tox concentrations were filtered above because there were less observations at those levels
+
+OM <- LoF %>%
+  filter(Species == "Oncorhynchus mykiss")
+```
+
+## Graph
+
+
+```{r}
+
+boxplot(Length ~ Tox_conc, data=PP[PP$Toxicant == "Sulfate",])
+
+boxplot(Length ~ Tox_conc, data=OM[OM$Toxicant == "Sulfate",])
+boxplot(Length ~ Tox_conc, data=OM[OM$Toxicant == "Nitrate",])
+
+```
+
+
+
