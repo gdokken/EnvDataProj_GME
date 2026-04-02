@@ -93,10 +93,19 @@ boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
 ```
 ```{r}
 
-Fatmucket=ToxGrowth %>%
-  filter(Species == "Lampsilis siliquoidea")   #come back to
-unique(Fatmucket$Tox_conc)
-Fatmucket$Tox_conc = factor(Fatmucket$Tox_conc, levels = c())
+Fatmucket15=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2015")        
+unique(Fatmucket15$Tox_conc)
+unique(Fatmucket$Year)
+Fatmucket15$Tox_conc = factor(Fatmucket15$Tox_conc, levels = c(20, 228, 392, 713, 1462, 3000))
+
+Fatmucket16=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2016")          
+unique(Fatmucket16$Tox_conc)
+unique(Fatmucket$Year)
+Fatmucket16$Tox_conc = factor(Fatmucket16$Tox_conc, levels = c(1.5, 17.3, 34.3, 75.3, 152.3, 320.1))
 
 Rainbowmussel=ToxGrowth %>%
   filter(Species == "Villosa iris")
@@ -113,10 +122,19 @@ Fatheadminnow=ToxGrowth %>%
 unique(Fatheadminnow$Tox_conc)
 Fatheadminnow$Tox_conc = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
 
-Rainbowtrout=ToxGrowth %>%
-  filter(Species == "Oncorhynchus mykiss")   #come back to
-unique(Rainbowtrout$Tox_conc)
-Rainbowtrout$Tox_conc = factor(Rainbowtrout$Tox_conc, levels = c())
+Rainbowtrout16=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2016")
+unique(Rainbowtrout16$Tox_conc)
+unique(Rainbowtrout$Year)
+Rainbowtrout16$Tox_conc = factor(Rainbowtrout16$Tox_conc, levels = c(1.5, 9.8, 20.7, 40.2, 82.0, 166.3))
+
+Rainbowtrout18=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2018")
+unique(Rainbowtrout18$Tox_conc)
+unique(Rainbowtrout$Year)
+Rainbowtrout18$Tox_conc = factor(Rainbowtrout18$Tox_conc, levels = c(19.0, 210.3, 419.4, 781.0, 1579.9, 3240.4))
 
 Midge=ToxGrowth %>%
   filter(Species == "Chironomus dilutus")
