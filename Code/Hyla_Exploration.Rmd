@@ -8,7 +8,9 @@ date: "2026-03-19"
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(broom)
 library(ggplot2)
+library(lawstat)
 ```
 
 ## Load Data
@@ -22,14 +24,37 @@ data.frame(HylaMeta)
 
 ```{r}
 
-boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc)
+boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration", ylab = "Metamorphosis Time (Days)", main = "Nitrate Effect on Metamorphosis")
 
 ```
 
 ## Signifigance
 
 ```{r}
-SigM <- aov(Metamorph_time ~ Tox_conc, data = HylaMeta)
-summary(SigM)
+shapiro.test(HylaMeta$Metamorph_time)
+levene.test(HylaMeta$Metamorph_time, HylaMeta$Tox_conc)
 ```
+
+```{r}
+kruskal.test(Metamorph_time ~ Tox_conc, data = HylaMeta)
+SigM <- kruskal.test(Metamorph_time ~ Tox_conc, data = HylaMeta)
+```
+
+## Post HOC
+
+```{r}
+pw <- pairwise.t.test(HylaMeta$Metamorph_time, 
+                      HylaMeta$Tox_conc, 
+                      p.adjust.method = "bonferroni")
+pw
+
+```
+
+## Tidy
+
+```{r}
+tidy(pw)
+```
+
+
 
