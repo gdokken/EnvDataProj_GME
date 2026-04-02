@@ -8,8 +8,8 @@ date: "2026-03-05"
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
-
-library(gtools) #testing #unneeded
+library(dplyr)
+#library(gtools) #testing #unneeded
 
 ```
 
@@ -96,7 +96,7 @@ boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
 Fatmucket=ToxGrowth %>%
   filter(Species == "Lampsilis siliquoidea")   #come back to
 unique(Fatmucket$Tox_conc)
-Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c())
+Fatmucket$Tox_conc = factor(Fatmucket$Tox_conc, levels = c())
 
 Rainbowmussel=ToxGrowth %>%
   filter(Species == "Villosa iris")
@@ -165,7 +165,135 @@ Midge %>%
 ```
 
 
+```{r}
+head(Fatmucket)
 
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Rainbowmussel)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Scuds)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Fatheadminnow)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Rainbowtrout)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Midge)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+#saving for future maybe
+head(Fatheadminnow)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Fatheadminnow)
+
+as.numeric(Fatheadminnow$Tox_conc)
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+```
 
 
 
