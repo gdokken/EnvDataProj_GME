@@ -51,12 +51,12 @@ SigW <- kruskal.test(Wet_wt ~ Tox_conc, data = HylaMeta)
 ## Post HOC
 
 ```{r}
-pwm <- pairwise.t.test(HylaMeta$Metamorph_time, 
+pwm <- pairwise.wilcox.test(HylaMeta$Metamorph_time, 
                       HylaMeta$Tox_conc, 
                       p.adjust.method = "bonferroni")
 pwm
 
-pww <- pairwise.t.test(HylaMeta$Wet_wt, 
+pww <- pairwise.wilcox.test(HylaMeta$Wet_wt, 
                       HylaMeta$Tox_conc, 
                       p.adjust.method = "bonferroni")
 pww
