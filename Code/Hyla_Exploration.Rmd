@@ -26,6 +26,8 @@ data.frame(HylaMeta)
 
 boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration", ylab = "Metamorphosis Time (Days)", main = "Nitrate Effect on Metamorphosis")
 
+boxplot(HylaMeta$Wet_wt ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration", ylab = "Weight", main = "Nitrate Effect on Weight")
+
 ```
 
 ## Signifigance
@@ -33,28 +35,33 @@ boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc, col = "lightcyan2", staplel
 ```{r}
 shapiro.test(HylaMeta$Metamorph_time)
 levene.test(HylaMeta$Metamorph_time, HylaMeta$Tox_conc)
+
+shapiro.test(HylaMeta$Wet_wt)
+levene.test(HylaMeta$Wet_wt, HylaMeta$Tox_conc)
 ```
 
 ```{r}
 kruskal.test(Metamorph_time ~ Tox_conc, data = HylaMeta)
 SigM <- kruskal.test(Metamorph_time ~ Tox_conc, data = HylaMeta)
+
+kruskal.test(Wet_wt ~ Tox_conc, data = HylaMeta)
+SigW <- kruskal.test(Wet_wt ~ Tox_conc, data = HylaMeta)
 ```
 
 ## Post HOC
 
 ```{r}
-pw <- pairwise.t.test(HylaMeta$Metamorph_time, 
+pwm <- pairwise.t.test(HylaMeta$Metamorph_time, 
                       HylaMeta$Tox_conc, 
                       p.adjust.method = "bonferroni")
-pw
+pwm
 
+pww <- pairwise.t.test(HylaMeta$Wet_wt, 
+                      HylaMeta$Tox_conc, 
+                      p.adjust.method = "bonferroni")
+pww
 ```
 
-## Tidy
-
-```{r}
-tidy(pw)
-```
 
 
 
