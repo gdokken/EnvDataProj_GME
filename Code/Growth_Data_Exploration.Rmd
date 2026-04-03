@@ -97,91 +97,91 @@ Fatmucket15=ToxGrowth %>%
   filter(Species == "Lampsilis siliquoidea") %>%
   filter(Year == "2015")        
 unique(Fatmucket15$Tox_conc)
-unique(Fatmucket$Year)
-Fatmucket15$Tox_conc = factor(Fatmucket15$Tox_conc, levels = c(20, 228, 392, 713, 1462, 3000))
+unique(Fatmucket15$Year)
+Fatmucket15$Tox_conc_fct = factor(Fatmucket15$Tox_conc, levels = c(20, 228, 392, 713, 1462, 3000))
 
 Fatmucket16=ToxGrowth %>%
   filter(Species == "Lampsilis siliquoidea") %>%
   filter(Year == "2016")          
 unique(Fatmucket16$Tox_conc)
-unique(Fatmucket$Year)
-Fatmucket16$Tox_conc = factor(Fatmucket16$Tox_conc, levels = c(1.5, 17.3, 34.3, 75.3, 152.3, 320.1))
+unique(Fatmucket16$Year)
+Fatmucket16$Tox_conc_fct = factor(Fatmucket16$Tox_conc, levels = c(1.5, 17.3, 34.3, 75.3, 152.3, 320.1))
 
 Rainbowmussel=ToxGrowth %>%
   filter(Species == "Villosa iris")
 unique(Rainbowmussel$Tox_conc)
-Rainbowmussel$Tox_conc = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
+Rainbowmussel$Tox_conc_fct = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
 
 Scuds=ToxGrowth %>%
   filter(Species == "Hyalella azteca")
 unique(Scuds$Tox_conc)
-Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
+Scuds$Tox_conc_fct = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
 
 Fatheadminnow=ToxGrowth %>%
   filter(Species == "Pimephales promelas")
 unique(Fatheadminnow$Tox_conc)
-Fatheadminnow$Tox_conc = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
+Fatheadminnow$Tox_conc_fct = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
 
 Rainbowtrout16=ToxGrowth %>%
   filter(Species == "Oncorhynchus mykiss") %>%
   filter(Year == "2016")
 unique(Rainbowtrout16$Tox_conc)
-unique(Rainbowtrout$Year)
-Rainbowtrout16$Tox_conc = factor(Rainbowtrout16$Tox_conc, levels = c(1.5, 9.8, 20.7, 40.2, 82.0, 166.3))
+unique(Rainbowtrout16$Year)
+Rainbowtrout16$Tox_conc_fct = factor(Rainbowtrout16$Tox_conc, levels = c(1.5, 9.8, 20.7, 40.2, 82.0, 166.3))
 
 Rainbowtrout18=ToxGrowth %>%
   filter(Species == "Oncorhynchus mykiss") %>%
   filter(Year == "2018")
 unique(Rainbowtrout18$Tox_conc)
-unique(Rainbowtrout$Year)
-Rainbowtrout18$Tox_conc = factor(Rainbowtrout18$Tox_conc, levels = c(19.0, 210.3, 419.4, 781.0, 1579.9, 3240.4))
+unique(Rainbowtrout18$Year)
+Rainbowtrout18$Tox_conc_fct = factor(Rainbowtrout18$Tox_conc, levels = c(19.0, 210.3, 419.4, 781.0, 1579.9, 3240.4))
 
 Midge=ToxGrowth %>%
   filter(Species == "Chironomus dilutus")
 unique(Midge$Tox_conc)
-Midge$Tox_conc = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
+Midge$Tox_conc_fct = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
 ```
 
 ```{r}
 Fatmucket15 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +    #not working and idk why
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +    #not working and idk why
   geom_boxplot() 
 
 Fatmucket16 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Rainbowmussel %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 
 Scuds %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Fatheadminnow %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Rainbowtrout16 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Rainbowtrout18 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Midge %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 
@@ -191,7 +191,7 @@ Midge %>%
 ```{r}
 head(Fatmucket15)
 
-as.numeric(Fatmucket15$Tox_conc)
+
 dim(Fatmucket15)
 
 mean(Fatmucket15$Tox_conc)
@@ -207,16 +207,15 @@ t.test(fm51, fm52, var.equal = T)
 
 head(Fatmucket16)
 
-as.numeric(as.character(Fatmucket16$Tox_conc))
 dim(Fatmucket16)
 
 mean(Fatmucket16$Tox_conc)
 sd(Fatmucket16$Tox_conc)
-                                        #not working
+                                        
 mean(Fatmucket16$Survival)
 sd(Fatmucket16$Survival)
 
-#fhm1 = rnorm(48, mean=, sd=)
+fhm1 = rnorm(48, mean=100.1333, sd=111.2003)
 fhm2 = rnorm(48, mean=9.854167, sd=0.4607849)
 t.test(fhm1, fhm2, var.equal = T)
 
@@ -238,23 +237,22 @@ t.test(rbm1, rbm2, var.equal = T)
 
 head(Scuds)
 
-#as.numeric(Scuds$Tox_conc)  #root of problem?
+
 dim(Scuds)
 
-#mean(Scuds$Tox_conc)         #i dont even know at this point
-#sd(Scuds$Tox_conc)
+mean(Scuds$Tox_conc)         #i dont even know at this point
+sd(Scuds$Tox_conc)
 
 mean(Scuds$Survival)
 sd(Scuds$Survival)
 
-#scd1 = rnorm(30, mean=, sd=)
+scd1 = rnorm(30, mean=675.5, sd=676.061)
 scd2 = rnorm(30, mean=9.6, sd=0.8550055)
 t.test(scd1, scd2, var.equal = T)
 
 
 head(Fatheadminnow)
 
-as.numeric(Fatheadminnow$Tox_conc)
 dim(Fatheadminnow)
 
 mean(Fatheadminnow$Tox_conc)
@@ -270,48 +268,45 @@ t.test(fhm1, fhm2, var.equal = T)
 
 head(Rainbowtrout16)
 
-#as.numeric(Rainbowtrout16$Tox_conc)
 dim(Rainbowtrout16)
 
-#mean(Rainbowtrout16$Tox_conc)
-#sd(Rainbowtrout16$Tox_conc)
+mean(Rainbowtrout16$Tox_conc)
+sd(Rainbowtrout16$Tox_conc)
 
 mean(Rainbowtrout16$Survival)
 sd(Rainbowtrout16$Survival)
 
-#rt61 = rnorm(24, mean=, sd=)
+rt61 = rnorm(24, mean=53.41667, sd=58.08909)
 rt62 = rnorm(24, mean=10, sd=0)
 t.test(rt61, rt62, var.equal = T)
 
 
 head(Rainbowtrout18)
 
-#as.numeric(Rainbowtrout18$Tox_conc)
 dim(Rainbowtrout18)
 
-#mean(Rainbowtrout18$Tox_conc)
-#sd(Rainbowtrout18$Tox_conc)
+mean(Rainbowtrout18$Tox_conc)
+sd(Rainbowtrout18$Tox_conc)
 
 mean(Rainbowtrout18$Survival)
 sd(Rainbowtrout18$Survival)
 
-#rt81 = rnorm(24, mean=, sd=)
+rt81 = rnorm(24, mean=1041.667, sd=1128.007)
 rt82 = rnorm(24, mean=13.29167, sd=1.428869)
 t.test(fhm1, fhm2, var.equal = T)
 
 
 head(Midge)
 
-#as.numeric(Midge$Tox_conc)
 dim(Midge)
 
-#mean(Midge$Tox_conc)
-#sd(Midge$Tox_conc)
+mean(Midge$Tox_conc)
+sd(Midge$Tox_conc)
 
 mean(Midge$Survival)
 sd(Midge$Survival)
 
-#mdg1 = rnorm(48, mean=, sd=)
+mdg1 = rnorm(48, mean=29.9, sd=33.4373)
 mdg2 = rnorm(48, mean=9.208333, sd=1.486941)
 t.test(mdg1, mdg2, var.equal = T)
 
