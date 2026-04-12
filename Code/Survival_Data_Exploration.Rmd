@@ -23,38 +23,48 @@ survival %>%
   filter(Toxicant == "Sulfate") %>%
   ggplot(aes(x = Tox_conc, y = survival_rate)) +
     geom_point() +
-    geom_smooth() +
-    labs(title = "Survival Rate vs Sulfate Concentration")
+    geom_smooth(color = "deepskyblue3") +
+    labs(title = "Survival Rate vs Sulfate Concentration", x = "Sulfate Concentration", y = "Survival Rate") +
+  theme_bw()
 
 survival %>%
   filter(Toxicant == "Nitrate") %>%
   filter(Tox_conc < 2500) %>%
   ggplot(aes(x = Tox_conc, y = survival_rate)) +
     geom_point() +
-    geom_smooth() +
-    labs(title = "Survival Rate vs Nitrate Concentration")
+    geom_smooth(color = "deepskyblue3") +
+    labs(title = "Survival Rate vs Nitrate Concentration",x = "Nitrate Concentration", y = "Survival Rate") +
+  theme_bw()
 
-#There's an in the Nitrate Concentration that's messing with the regression line, COULD cut it out of the data set or just from the graph unless we feel a need to keep it
+#There's an outlier in the Nitrate Concentration that's messing with the regression line, COULD cut it out of the data set or just from the graph unless we feel a need to keep it
 ```
 
 ```{r}
 #seeing how each species did with Sulfate
+names <- c("Hyalella azteca" = "Sideswimmers", "Lampsilis siliquoidea" = "Fatmucket", "Oncorhynkiss mykiss" = "Rainbow Trout", "Pimephales promelas" = "Fathead Minnow", "Villosa iris" = "Rainbow Mussel")
+
 survival %>%
   filter(Toxicant == "Sulfate") %>%
   ggplot(aes(x = Tox_conc, y = survival_rate)) +
   geom_point() +
-  geom_smooth() +
-  facet_wrap(~Species)
+  geom_smooth(color = "deepskyblue3") +
+    labs(title = "Species Survival Rate vs Sulfate Concentration",x = "Sulfate Concentration", y = "Survival Rate") +
+  facet_wrap(~Species, labeller = as_labeller(names)) +
+  theme_bw()
 ```
 
 ```{r}
 #seeing how each species did with Nitrate
+names2 <- c("Lampsilis siliquoidea" = "Fatmucket", "Hyla versicolor" = "Gray Treefrog", "Chironomus dilutus" = "Midge", "Lithobates sylvaticus" = "Wood Frog", "Oncorhynchus mykiss" = "Rainbow Trout")
+
 survival %>%
-  filter(Toxicant == "Sulfate") %>%
+  filter(Toxicant == "Nitrate") %>%
   ggplot(aes(x = Tox_conc, y = survival_rate)) +
   geom_point() +
-  geom_smooth() +
-  facet_wrap(~Species)
+  geom_smooth(color = "deepskyblue3") +
+  labs(title = "Species Survival Rate vs Nitrate Concentration",x = "Nitrate Concentration", y = "Survival Rate") +
+  facet_wrap(~Species, labeller = as_labeller(names2)) +
+  theme_bw()
 ```
 
 ```{r}
