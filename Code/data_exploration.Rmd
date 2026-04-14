@@ -1,0 +1,214 @@
+---
+title: "survival_exploration"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+
+survival = read_csv("C:/Users/ema4p/Downloads/DATA_ENV/ENVSDATA_data - Survival of test organisms in exposeure bioessay.csv")
+```
+
+```{r}
+survival = survival %>%
+  mutate(survival_rate = Survival/Stocked)
+
+print(unique(survival$Toxicant))
+```
+
+```{r}
+#relationship between concentration of the two toxicants and survival rate
+
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "Survival Rate vs Sulfate Concentration", x = "Sulfate Concentration", y = "Survival Rate")
+
+survival %>%
+  filter(Toxicant == "Nitrate") %>%
+  filter(Tox_conc < 2500) %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "Survival Rate vs Nitrate Concentration", x = "Nitrate Concentration", y = "Survival Rate")
+
+#There's an in the Nitrate Concentration that's messing with the regression line, COULD cut it out of the data set or just from the graph unless we feel a need to keep it
+```
+
+```{r}
+#seeing how each species did with Sulfate
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Species)
+```
+
+```{r}
+#seeing how each species did with
+
+survival_new = survival %>%
+  str_replace_all(survival$Species, 'Hyalella azteca', 'Scuds')
+
+print(unique(survival$Species))
+
+species_labels <- c(
+  "Lampsilis siliquoidea" = "Fatmucket",
+  "Villosa iris" = "Rainbow Mussel",
+  "Hyalella azteca" = "Scuds",
+  "Pimephales promelas"  = "Fathead Minnow",
+  "Oncorhynkiss mykiss" = "Rainbow Trout",
+  "Chironomus dilutus" = "Midge",
+  "Oncorhynchus mykiss" = "Rainbow Trout",
+  "Hyla versicolor" = "Gray Treefrog",
+  "Lithobates sylvaticus" = "Wood Frog"
+)
+
+#Nitrate
+survival %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Tox_conc, y = survival_rate)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Species, labeller = labeller(Species = species_labels))
+```
+
+```{r}
+#The concentration, survival and growth data sets all have Days 34, 42 and 55
+
+print(unique(concentration$Day))
+
+print(unique(survival$Day))
+
+print(unique(growth$Day))
+
+print(unique(concentration_chronic$Day))
+
+```
+
+
+```{r}
+#Hyalella Azteca is observed 4 vs 42, Lampsilis is 4 vs 28, Oncorhynkiss is only 55,
+#Pimephales is 7 vs 34, and Villosa iris is 4 vs 28
+
+#starting days are 4 and 7, ending days are 28 and 34
+
+survival %>%
+  mutate(Day = as.factor(Day)) %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Day, y = survival_rate)) +
+  geom_boxplot()
+
+survival %>%
+  mutate(Day = as.factor(Day)) %>%
+  filter(Toxicant == "Sulfate") %>%
+  ggplot(aes(x = Day, y = survival_rate)) +
+  geom_boxplot() +
+  facet_wrap(~Species)
+```
+```{r}
+cor(survival$Tox_conc, survival$survival_rate)
+```
+#LOOKING AT GROWTH DATA SET
+
+```{r}
+growth <- read_csv("C:/Users/ema4p/Downloads/ENVSDATA_data - Growth of test organisms.csv")
+```
+
+```{r}
+growth <- growth %>%
+  mutate(survival_rate = Survival/Stocked)
+
+cor(growth$survival_rate, growth$)
+
+print(unique(growth$Species))
+```
+#LENGTH
+```{r}
+length <- read_csv("C:/Users/ema4p/Downloads/DATA_ENV/ENVSDATA_data - Length of fish.csv")
+
+print(unique(length$Species))
+```
+
+```{r}
+species_labels <- c(
+  "Lampsilis siliquoidea" = "Fatmucket",
+  "Villosa iris" = "Rainbow Mussel",
+  "Hyalella azteca" = "Scuds",
+  "Pimephales promelas"  = "Fathead Minnow",
+  "Oncorhynkiss mykiss" = "Rainbow Trout",
+  "Chironomus dilutus" = "Midge",
+  "Oncorhynchus mykiss" = "Rainbow Trout",
+  "Hyla versicolor" = "Gray Treefrog",
+  "Lithobates sylvaticus" = "Wood Frog"
+)
+
+ggplot(data = length, aes(y = Length)) +
+  geom_boxplot(fill = "lightcyan2") +
+  scale_x_discrete(labels = NULL) +
+  facet_wrap(~Species, labeller = as_labeller(species_labels)) +
+  theme_classic()
+
+survival %>%
+  filter(Species == "Oncorhynchus mykiss" | Species == "Pimephales promelas") %>%
+  ggplot(aes(y = survival_rate)) +
+  geom_boxplot(fill = "lightcyan2") +
+  scale_x_discrete(labels = NULL) +
+  labs(y = "Survival Rate") +
+  facet_wrap(~Species, labeller = as_labeller(species_labels)) +
+  theme_classic()
+```
+#REPRODUCTION DATA EXPLORATION
+
+```{r}
+reproduction <- read_csv("C:/Users/ema4p/Downloads/DATA_ENV/ENVSDATA_data - Hyalella azteca reproduction 2015.csv")
+```
+
+```{r}
+reproduction <- reproduction %>%
+  mutate(survival_rate = Survival/Stocked)
+
+ggplot(data = reproduction, aes(x = Tox_conc, y = Total_young_per_rep)) +
+  geom_line() +
+  geom_smooth()
+
+ggplot(data = reproduction, aes(x = Tox_conc, y = survival_rate)) +
+  geom_line() +
+  geom_smooth()
+```
+#LENGTH AGAIN
+```{r}
+#length %>%
+#  filter(Species == "Pimephales promelas")
+
+#559 Oncorhynchus mykiss observations, 256 Pimephales promelas observations
+#Oncorhynchus mean is 43.4331484794276, Pimephales mean is 19.63390625, 
+#Oncorhynchus sd is 4.26302655934212, Pimephales sd is 2.02493272098354
+
+
+o_group <- rnorm(559, mean = 43.4331484794276, sd = 4.26302655934212)
+p_group <- rnorm(256, mean = 19.63390625, sd = 2.02493272098354)
+result <- t.test(o_group, p_group)
+print(result)
+
+#p-value is 2.2e-16 so we fail to reject the null which means it's extremely likely that these values are significant
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
