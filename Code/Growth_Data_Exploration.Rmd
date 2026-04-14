@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Growth_Data_Exploration"
 output: html_document
@@ -555,8 +556,3 @@ Midge %>%
        y= "Percent of Survival") +
   theme_bw() 
 ```
-
-
-
-
-
