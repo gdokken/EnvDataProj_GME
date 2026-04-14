@@ -9,6 +9,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(dplyr)
+library(broom) #may not be needed
+library(lawstat) #may not be needed
 #library(gtools) #testing #unneeded
 
 ```
@@ -311,7 +313,34 @@ mdg2 = rnorm(48, mean=9.208333, sd=1.486941)
 t.test(mdg1, mdg2, var.equal = T)
 
 ```
+```{r}
+shapiro.test(Fatmucket15$Tox_conc) #significant
+levene.test(Fatmucket15$Tox_conc, Fatmucket15$Survival) #significant
 
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(ToxGrowth$Tox_conc)
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+
+shapiro.test(Midge$Tox_conc)
+levene.test(Midge$Tox_conc, Midge$Survival)
+```
 
 ```{r}
 ds1 = ToxGrowth %>%
@@ -319,147 +348,157 @@ ds1 = ToxGrowth %>%
   mutate(percent_survival = 1-(sum(Survival)/sum(Stocked))) %>%
   arrange(desc(Species))
 
-ds1 %>% 
-  case_when(Species == "")
+#ds1 %>% 
+#  case_when(Species == "")
 
 Midge %>%
   ggplot(aes(x=factor(Tox_conc), y=percent_survival)) +
     geom_bar(stat = "identity") +
-  facet_wrap(~Species, scales = "free_x")
+  facet_wrap(~Species, scales = "free_x")  #dont look at this
+```
 
+```{r}
 Fatmucket15=ToxGrowth %>%
   filter(Species == "Lampsilis siliquoidea") %>%
   filter(Year == "2015") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Fatmucket16=ToxGrowth %>%
   filter(Species == "Lampsilis siliquoidea") %>%
   filter(Year == "2016") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Rainbowmussel=ToxGrowth %>%
   filter(Species == "Villosa iris") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Scuds=ToxGrowth %>%
   filter(Species == "Hyalella azteca") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Fatheadminnow=ToxGrowth %>%
   filter(Species == "Pimephales promelas") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Rainbowtrout16=ToxGrowth %>%
   filter(Species == "Oncorhynchus mykiss") %>%
   filter(Year == "2016") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Rainbowtrout18=ToxGrowth %>%
   filter(Species == "Oncorhynchus mykiss") %>%
   filter(Year == "2018") %>% 
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
 
 Midge=ToxGrowth %>%
   filter(Species == "Chironomus dilutus") %>%
   group_by(factor(Tox_conc)) %>%
-  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked))) %>%
+  mutate(hundredsurvival=percent_survival*100)
 ```
 
 ```{r}
 Fatmucket15 %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Fatmucket 2015 Experiment",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Fatmucket16 %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent)  +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Fatmucket 2016 Experiment",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Rainbowmussel %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Rainbow Mussel",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Scuds %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Scuds",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Fatheadminnow %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Fathead Minnow",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Rainbowtrout16 %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Rainbow Trout 2016 Experiment",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Rainbowtrout18 %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Rainbow Trout 2018 Experiment",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw()
 
 Midge %>%
-  distinct(Tox_conc, percent_survival) %>%
-  select(`factor(Tox_conc)`, percent_survival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = percent_survival)) +
-  geom_bar(stat = "identity") +
-  scale_y_continuous(labels = scales::percent)  +
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
   labs(title = "Midge",
        x= "Concentration of Toxicant",
        y= "Percent of Organisms that Survived") +
-  theme_minimal()
+  theme_bw() 
 ```
 
 
