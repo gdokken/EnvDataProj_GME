@@ -13,6 +13,8 @@ library(broom) #may not be needed
 library(lawstat) #may not be needed
 #library(gtools) #testing #unneeded
 library(FSA)
+library(rstatix)
+library(statsr)
 
 ```
 
@@ -355,19 +357,45 @@ kruskal.test(Survival ~ Tox_conc, data=Midge) #Significant
 ```
 
 ```{r}
-pairwise.wilcox.test(Midge$Survival,
-                     Midge$Tox_conc,
-                     p.adjust.method = "BH")
 
-pairwise.wilcox.test(Fatmucket15$Survival,
-                     Fatmucket15$Tox_conc,
-                     p.adjust.method = "BH")
+pairwise.t.test(Fatmucket15$Survival, Fatmucket15$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Fatmucket16$Survival, Fatmucket16$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Rainbowmussel$Survival, Rainbowmussel$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Fatheadminnow$Survival, Fatheadminnow$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Midge$Survival, Midge$Tox_conc, p.adjust.method = "bonferroni")
+```
+
+
+```{r}
+
+dunnTest(Tox_conc ~ Survival, data=Fatmucket15, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Fatmucket16, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Rainbowmussel, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Fatheadminnow, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Midge, method = "bonferroni")
 
 ```
 
 ```{r}
-dunnTest(Tox_conc ~ Survival, data=Midge, method = "bonferroni")
+Midge %>%
+  dunn_test(Survival ~ Tox_conc, p.adjust.method = "bonferroni")
+
+, p.adjust.method = "bonferroni"
 ```
+
+```{r}
+fisher.test(table(Midge1$Survival, Midge1$Tox_conc), control = 0.2, alternative = "greater")
+Midge1=Midge %>%
+  filter(Tox_conc == c("96.6", "0.2"))
+
+Fatmucket151 = Fatmucket15 %>%
+  filter(Tox_conc == c("20", "3000"))
+
+         #matrix(c(0.2, 96.6, ), )
+         
+fisher.test(table(Fatmucket151$Survival, Fatmucket151$Tox_conc))
+```
+
 
 ```{r}
 ds1 = ToxGrowth %>%
@@ -445,21 +473,21 @@ Fatmucket15 %>%
   ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
   geom_bar(stat = "identity", fill="lightcyan2") +
   ylim(0,100) +
-  labs(title = "Fatmucket 2015 Experiment",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
+  labs(title = "Fatmucket",
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
   theme_bw()
 
-Fatmucket16 %>%
-  distinct(Tox_conc, hundredsurvival) %>%
-  select(`factor(Tox_conc)`, hundredsurvival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
-  geom_bar(stat = "identity", fill="lightcyan2") +
-  ylim(0,100) +
-  labs(title = "Fatmucket 2016 Experiment",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
-  theme_bw()
+#Fatmucket16 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Fatmucket 2016 Experiment",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
 
 Rainbowmussel %>%
   distinct(Tox_conc, hundredsurvival) %>%
@@ -468,20 +496,20 @@ Rainbowmussel %>%
   geom_bar(stat = "identity", fill="lightcyan2") +
   ylim(0,100) +
   labs(title = "Rainbow Mussel",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
   theme_bw()
 
-Scuds %>%
-  distinct(Tox_conc, hundredsurvival) %>%
-  select(`factor(Tox_conc)`, hundredsurvival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
-  geom_bar(stat = "identity", fill="lightcyan2") +
-  ylim(0,100) +
-  labs(title = "Scuds",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
-  theme_bw()
+#Scuds %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Scuds",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
 
 Fatheadminnow %>%
   distinct(Tox_conc, hundredsurvival) %>%
@@ -490,31 +518,31 @@ Fatheadminnow %>%
   geom_bar(stat = "identity", fill="lightcyan2") +
   ylim(0,100) +
   labs(title = "Fathead Minnow",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
   theme_bw()
 
-Rainbowtrout16 %>%
-  distinct(Tox_conc, hundredsurvival) %>%
-  select(`factor(Tox_conc)`, hundredsurvival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
-  geom_bar(stat = "identity", fill="lightcyan2") +
-  ylim(0,100) +
-  labs(title = "Rainbow Trout 2016 Experiment",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
-  theme_bw()
+#Rainbowtrout16 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Rainbow Trout 2016 Experiment",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
 
-Rainbowtrout18 %>%
-  distinct(Tox_conc, hundredsurvival) %>%
-  select(`factor(Tox_conc)`, hundredsurvival) %>%
-  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
-  geom_bar(stat = "identity", fill="lightcyan2") +
-  ylim(0,100) +
-  labs(title = "Rainbow Trout 2018 Experiment",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
-  theme_bw()
+#Rainbowtrout18 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Rainbow Trout 2018 Experiment",
+       #x= "Concentration of Toxicants",
+       #y= "Percent of Survival") +
+  #theme_bw() 
 
 Midge %>%
   distinct(Tox_conc, hundredsurvival) %>%
@@ -523,8 +551,8 @@ Midge %>%
   geom_bar(stat = "identity", fill="lightcyan2") +
   ylim(0,100) +
   labs(title = "Midge",
-       x= "Concentration of Toxicant",
-       y= "Percent of Organisms that Survived") +
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
   theme_bw() 
 ```
 
