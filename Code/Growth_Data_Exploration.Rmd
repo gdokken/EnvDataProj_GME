@@ -1,4 +1,4 @@
- HEAD
+<<<<<<< HEAD
 ---
 title: "Growth_Data_Exploration"
 output: html_document
@@ -9,83 +9,13 @@ date: "2026-03-05"
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
-
-```
-
-## Data
-
-Each data pathway is different, so upload the data from your computer 
-
-```{r}
-#View(ToxGrowth)
-```
-
-```{r}
-unique(ToxGrowth$Species)
-```
-
-```{r}
-ToxGrowth %>%
-  filter(Species == "Lampsilis siliquoidea") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-# above species tested twice (two different years)
-
-ToxGrowth %>%
-  filter(Species == "Villosa iris") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-ToxGrowth %>%
-  filter(Species == "Hyalella azteca") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-ToxGrowth %>%
-  filter(Species == "Pimephales promelas") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-ToxGrowth %>%
-  filter(Species == "Oncorhynchus mykiss") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-# above species tested twice (two different years)
-
-ToxGrowth %>%
-  filter(Species == "Chironomus dilutus") %>%
-  replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
-
-
-```
-
-
-
-
-
-
-
----
-title: "Growth_Data_Exploration"
-output: html_document
-date: "2026-03-05"
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-library(tidyverse)
-
-library(gtools) #testing #unneeded
+library(dplyr)
+library(broom) #may not be needed
+library(lawstat) #may not be needed
+#library(gtools) #testing #unneeded
+library(FSA)
+library(rstatix)
+library(statsr)
 
 ```
 
@@ -169,80 +99,460 @@ boxplot(Rainbowmussel$Dry_rep_wt ~ Rainbowmussel$Tox_conc3)
 ```
 ```{r}
 
-Fatmucket=ToxGrowth %>%
-  filter(Species == "Lampsilis siliquoidea")   #come back to
-unique(Fatmucket$Tox_conc)
-Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c())
+Fatmucket15=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2015")
+unique(Fatmucket15$Tox_conc)
+unique(Fatmucket15$Year)
+Fatmucket15$Tox_conc_fct = factor(Fatmucket15$Tox_conc, levels = c(20, 228, 392, 713, 1462, 3000))
+
+Fatmucket16=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2016")          
+unique(Fatmucket16$Tox_conc)
+unique(Fatmucket16$Year)
+Fatmucket16$Tox_conc_fct = factor(Fatmucket16$Tox_conc, levels = c(1.5, 17.3, 34.3, 75.3, 152.3, 320.1))
 
 Rainbowmussel=ToxGrowth %>%
   filter(Species == "Villosa iris")
 unique(Rainbowmussel$Tox_conc)
-Rainbowmussel$Tox_conc = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
+Rainbowmussel$Tox_conc_fct = factor(Rainbowmussel$Tox_conc , levels=c(20, 228, 392, 713, 1462, 3000))
 
 Scuds=ToxGrowth %>%
   filter(Species == "Hyalella azteca")
 unique(Scuds$Tox_conc)
-Scuds$Tox_conc = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
+Scuds$Tox_conc_fct = factor(Scuds$Tox_conc, levels = c(54, 171, 292, 532, 1014, 1990))
 
 Fatheadminnow=ToxGrowth %>%
   filter(Species == "Pimephales promelas")
 unique(Fatheadminnow$Tox_conc)
-Fatheadminnow$Tox_conc = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
+Fatheadminnow$Tox_conc_fct = factor(Fatheadminnow$Tox_conc, levels = c(17.5, 224.3, 370.9, 765.7, 1566.9, 3032.4))
 
-Rainbowtrout=ToxGrowth %>%
-  filter(Species == "Oncorhynchus mykiss")   #come back to
-unique(Rainbowtrout$Tox_conc)
-Rainbowtrout$Tox_conc = factor(Rainbowtrout$Tox_conc, levels = c())
+Rainbowtrout16=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2016")
+unique(Rainbowtrout16$Tox_conc)
+unique(Rainbowtrout16$Year)
+Rainbowtrout16$Tox_conc_fct = factor(Rainbowtrout16$Tox_conc, levels = c(1.5, 9.8, 20.7, 40.2, 82.0, 166.3))
+
+Rainbowtrout18=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2018")
+unique(Rainbowtrout18$Tox_conc)
+unique(Rainbowtrout18$Year)
+Rainbowtrout18$Tox_conc_fct = factor(Rainbowtrout18$Tox_conc, levels = c(19.0, 210.3, 419.4, 781.0, 1579.9, 3240.4))
 
 Midge=ToxGrowth %>%
   filter(Species == "Chironomus dilutus")
 unique(Midge$Tox_conc)
-Midge$Tox_conc = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
+Midge$Tox_conc_fct = factor(Midge$Tox_conc, levels = c(0.2, 5.7, 11, 21.2, 44.7, 96.6))
 ```
 
 ```{r}
-Fatmucket %>%
+Fatmucket15 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
- # facet_wrap(~Year)
 
-# above species tested twice (two different years)
+Fatmucket16 %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
+  geom_boxplot() 
 
 Rainbowmussel %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 
 Scuds %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 Fatheadminnow %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
-Rainbowtrout %>%
+Rainbowtrout16 %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
-  geom_point(alpha=.6) 
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
+  geom_boxplot() 
 
-# above species tested twice (two different years)
+Rainbowtrout18 %>%
+  replace(is.na(.), 0) %>%
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
+  geom_boxplot() 
 
 Midge %>%
   replace(is.na(.), 0) %>%
-  ggplot(aes(x = Tox_conc, y = Dry_rep_wt), ) +
+  ggplot(aes(x = Tox_conc_fct, y = Dry_rep_wt), ) +
   geom_boxplot() 
 
 
 ```
 
 
+```{r}
+head(Fatmucket15)
 
 
+dim(Fatmucket15)
+
+mean(Fatmucket15$Tox_conc)
+sd(Fatmucket15$Tox_conc)
+
+mean(Fatmucket15$Survival)
+sd(Fatmucket15$Survival)
+
+fm51 = rnorm(24, mean=969.1667, sd=1039.746)
+fm52 = rnorm(24, mean=8.291667, sd=3.793348)
+t.test(fm51, fm52, var.equal = T)
 
 
-55f7ecb1427ebe87994efbd2b3b237b27820b7ba
+head(Fatmucket16)
+
+dim(Fatmucket16)
+
+mean(Fatmucket16$Tox_conc)
+sd(Fatmucket16$Tox_conc)
+                                        
+mean(Fatmucket16$Survival)
+sd(Fatmucket16$Survival)
+
+fhm1 = rnorm(48, mean=100.1333, sd=111.2003)
+fhm2 = rnorm(48, mean=9.854167, sd=0.4607849)
+t.test(fhm1, fhm2, var.equal = T)
+
+head(Rainbowmussel)
+
+as.numeric(Rainbowmussel$Tox_conc)
+dim(Rainbowmussel)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+rbm1 = rnorm(24, mean=996.2833, sd=1060.732)
+rbm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(rbm1, rbm2, var.equal = T)
+
+
+head(Scuds)
+
+
+dim(Scuds)
+
+mean(Scuds$Tox_conc)       
+sd(Scuds$Tox_conc)
+
+mean(Scuds$Survival)
+sd(Scuds$Survival)
+
+scd1 = rnorm(30, mean=675.5, sd=676.061)
+scd2 = rnorm(30, mean=9.6, sd=0.8550055)
+t.test(scd1, scd2, var.equal = T)
+
+
+head(Fatheadminnow)
+
+dim(Fatheadminnow)
+
+mean(Fatheadminnow$Tox_conc)
+sd(Fatheadminnow$Tox_conc)
+
+mean(Fatheadminnow$Survival)
+sd(Fatheadminnow$Survival)
+
+fhm1 = rnorm(24, mean=996.2833, sd=1060.732)
+fhm2 = rnorm(24, mean=10.70833, sd=5.376917)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Rainbowtrout16)
+
+dim(Rainbowtrout16)
+
+mean(Rainbowtrout16$Tox_conc)
+sd(Rainbowtrout16$Tox_conc)
+
+mean(Rainbowtrout16$Survival)
+sd(Rainbowtrout16$Survival)
+
+rt61 = rnorm(24, mean=53.41667, sd=58.08909)
+rt62 = rnorm(24, mean=10, sd=0)
+t.test(rt61, rt62, var.equal = T)
+
+
+head(Rainbowtrout18)
+
+dim(Rainbowtrout18)
+
+mean(Rainbowtrout18$Tox_conc)
+sd(Rainbowtrout18$Tox_conc)
+
+mean(Rainbowtrout18$Survival)
+sd(Rainbowtrout18$Survival)
+
+rt81 = rnorm(24, mean=1041.667, sd=1128.007)
+rt82 = rnorm(24, mean=13.29167, sd=1.428869)
+t.test(fhm1, fhm2, var.equal = T)
+
+
+head(Midge)
+
+dim(Midge)
+
+mean(Midge$Tox_conc)
+sd(Midge$Tox_conc)
+
+mean(Midge$Survival)
+sd(Midge$Survival)
+
+mdg1 = rnorm(48, mean=29.9, sd=33.4373)
+mdg2 = rnorm(48, mean=9.208333, sd=1.486941)
+t.test(mdg1, mdg2, var.equal = T)
+
+```
+```{r}
+shapiro.test(ToxGrowth$Tox_conc) #significant
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival) #significant
+
+shapiro.test(Fatmucket15$Tox_conc) #significant
+levene.test(Fatmucket15$Tox_conc, Fatmucket15$Survival) #not
+
+shapiro.test(Fatmucket16$Tox_conc) #significant
+levene.test(Fatmucket16$Tox_conc, Fatmucket16$Survival) #not
+
+shapiro.test(Rainbowmussel$Tox_conc) #significant
+levene.test(Rainbowmussel$Tox_conc, Rainbowmussel$Survival) #not
+
+shapiro.test(Scuds$Tox_conc) #significant
+levene.test(Scuds$Tox_conc, Scuds$Survival) #not
+
+shapiro.test(Fatheadminnow$Tox_conc) #significant
+levene.test(Fatheadminnow$Tox_conc, Fatheadminnow$Survival) #not
+
+shapiro.test(Rainbowtrout16$Tox_conc) #significant
+#levene.test(Rainbowtrout16$Tox_conc, Rainbowtrout16$Survival) #error = not
+
+shapiro.test(Rainbowtrout18$Tox_conc) #significant
+levene.test(Rainbowtrout18$Tox_conc, Rainbowtrout18$Survival) #not
+
+shapiro.test(Midge$Tox_conc) #significant
+levene.test(Midge$Tox_conc, Midge$Survival) #not
+```
+
+```{r}
+kruskal.test(Survival ~ Tox_conc, data=Fatmucket15) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Fatmucket16) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Rainbowmussel) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Scuds) #not
+kruskal.test(Survival ~ Tox_conc, data=Fatheadminnow) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Rainbowtrout16) # error = not
+kruskal.test(Survival ~ Tox_conc, data=Rainbowtrout18) #not
+kruskal.test(Survival ~ Tox_conc, data=Midge) #Significant
+```
+
+```{r}
+
+pairwise.t.test(Fatmucket15$Survival, Fatmucket15$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Fatmucket16$Survival, Fatmucket16$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Rainbowmussel$Survival, Rainbowmussel$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Fatheadminnow$Survival, Fatheadminnow$Tox_conc, p.adjust.method = "bonferroni")
+pairwise.t.test(Midge$Survival, Midge$Tox_conc, p.adjust.method = "bonferroni")
+```
+
+
+```{r}
+
+dunnTest(Tox_conc ~ Survival, data=Fatmucket15, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Fatmucket16, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Rainbowmussel, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Fatheadminnow, method = "bonferroni")
+dunnTest(Tox_conc ~ Survival, data=Midge, method = "bonferroni")
+
+```
+
+```{r}
+Midge %>%
+  dunn_test(Survival ~ Tox_conc, p.adjust.method = "bonferroni")
+
+, p.adjust.method = "bonferroni"
+```
+
+```{r}
+fisher.test(table(Midge1$Survival, Midge1$Tox_conc), control = 0.2, alternative = "greater")
+Midge1=Midge %>%
+  filter(Tox_conc == c("96.6", "0.2"))
+
+Fatmucket151 = Fatmucket15 %>%
+  filter(Tox_conc == c("20", "3000"))
+
+         #matrix(c(0.2, 96.6, ), )
+         
+fisher.test(table(Fatmucket151$Survival, Fatmucket151$Tox_conc))
+```
+
+
+```{r}
+ds1 = ToxGrowth %>%
+  group_by(Species, factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked))) %>%
+  arrange(desc(Species))
+
+#ds1 %>% 
+#  case_when(Species == "")
+
+Midge %>%
+  ggplot(aes(x=factor(Tox_conc), y=percent_survival)) +
+    geom_bar(stat = "identity") +
+  facet_wrap(~Species, scales = "free_x")  #dont look at this
+```
+
+```{r}
+Fatmucket15=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2015") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Fatmucket16=ToxGrowth %>%
+  filter(Species == "Lampsilis siliquoidea") %>%
+  filter(Year == "2016") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Rainbowmussel=ToxGrowth %>%
+  filter(Species == "Villosa iris") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Scuds=ToxGrowth %>%
+  filter(Species == "Hyalella azteca") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Fatheadminnow=ToxGrowth %>%
+  filter(Species == "Pimephales promelas") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Rainbowtrout16=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2016") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Rainbowtrout18=ToxGrowth %>%
+  filter(Species == "Oncorhynchus mykiss") %>%
+  filter(Year == "2018") %>% 
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked)))%>%
+  mutate(hundredsurvival=percent_survival*100)
+
+Midge=ToxGrowth %>%
+  filter(Species == "Chironomus dilutus") %>%
+  group_by(factor(Tox_conc)) %>%
+  mutate(percent_survival = 1-(sum(Survival)/sum(Stocked))) %>%
+  mutate(hundredsurvival=percent_survival*100)
+```
+
+```{r}
+Fatmucket15 %>%
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
+  labs(title = "Fatmucket",
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
+  theme_bw()
+
+#Fatmucket16 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Fatmucket 2016 Experiment",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
+
+Rainbowmussel %>%
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
+  labs(title = "Rainbow Mussel",
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
+  theme_bw()
+
+#Scuds %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Scuds",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
+
+Fatheadminnow %>%
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
+  labs(title = "Fathead Minnow",
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
+  theme_bw()
+
+#Rainbowtrout16 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Rainbow Trout 2016 Experiment",
+       #x= "Concentration of Toxicant",
+       #y= "Percent of Organisms that Survived") +
+  #theme_bw()
+
+#Rainbowtrout18 %>%
+  #distinct(Tox_conc, hundredsurvival) %>%
+  #select(`factor(Tox_conc)`, hundredsurvival) %>%
+  #ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  #geom_bar(stat = "identity", fill="lightcyan2") +
+  #ylim(0,100) +
+  #labs(title = "Rainbow Trout 2018 Experiment",
+       #x= "Concentration of Toxicants",
+       #y= "Percent of Survival") +
+  #theme_bw() 
+
+Midge %>%
+  distinct(Tox_conc, hundredsurvival) %>%
+  select(`factor(Tox_conc)`, hundredsurvival) %>%
+  ggplot(aes(x = `factor(Tox_conc)`, y = hundredsurvival)) +
+  geom_bar(stat = "identity", fill="lightcyan2") +
+  ylim(0,100) +
+  labs(title = "Midge",
+       x= "Concentration of Toxicants (mg/L)",
+       y= "Percent of Survival") +
+  theme_bw() 
+```
