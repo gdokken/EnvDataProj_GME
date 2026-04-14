@@ -24,9 +24,9 @@ data.frame(HylaMeta)
 
 ```{r}
 
-boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration (milligrams/liter)", ylab = "Metamorphosis Time (Days)", main = "Nitrate Effect on Metamorphosis")
+boxplot(HylaMeta$Metamorph_time ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration (Milligrams/Liter)", ylab = "Metamorphosis Time (Days)", main = "Nitrate Effect on Metamorphosis")
 
-boxplot(HylaMeta$Wet_wt ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration (milligrams/liter)", ylab = "Weight (Grams)", main = "Effect of Nitrate on the Weight of Metamorphosing Gray Treefrogs")
+boxplot(HylaMeta$Wet_wt ~ HylaMeta$Tox_conc, col = "lightcyan2", staplelwd = 1.4, whisklwd = 1.4, outlwd = 1.4, frame = FALSE, xlab = "Toxicant Concentration (Milligrams/Liter)", ylab = "Weight (Grams)", main = "Effect of Nitrate on the Weight of Metamorphosing Gray Treefrogs")
 
 ```
 
