@@ -12,6 +12,7 @@ library(dplyr)
 library(broom) #may not be needed
 library(lawstat) #may not be needed
 #library(gtools) #testing #unneeded
+library(FSA)
 
 ```
 
@@ -314,32 +315,58 @@ t.test(mdg1, mdg2, var.equal = T)
 
 ```
 ```{r}
+shapiro.test(ToxGrowth$Tox_conc) #significant
+levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival) #significant
+
 shapiro.test(Fatmucket15$Tox_conc) #significant
-levene.test(Fatmucket15$Tox_conc, Fatmucket15$Survival) #significant
+levene.test(Fatmucket15$Tox_conc, Fatmucket15$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Fatmucket16$Tox_conc) #significant
+levene.test(Fatmucket16$Tox_conc, Fatmucket16$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Rainbowmussel$Tox_conc) #significant
+levene.test(Rainbowmussel$Tox_conc, Rainbowmussel$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Scuds$Tox_conc) #significant
+levene.test(Scuds$Tox_conc, Scuds$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Fatheadminnow$Tox_conc) #significant
+levene.test(Fatheadminnow$Tox_conc, Fatheadminnow$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Rainbowtrout16$Tox_conc) #significant
+#levene.test(Rainbowtrout16$Tox_conc, Rainbowtrout16$Survival) #error = not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Rainbowtrout18$Tox_conc) #significant
+levene.test(Rainbowtrout18$Tox_conc, Rainbowtrout18$Survival) #not
 
-shapiro.test(ToxGrowth$Tox_conc)
-levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival)
+shapiro.test(Midge$Tox_conc) #significant
+levene.test(Midge$Tox_conc, Midge$Survival) #not
+```
 
-shapiro.test(Midge$Tox_conc)
-levene.test(Midge$Tox_conc, Midge$Survival)
+```{r}
+kruskal.test(Survival ~ Tox_conc, data=Fatmucket15) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Fatmucket16) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Rainbowmussel) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Scuds) #not
+kruskal.test(Survival ~ Tox_conc, data=Fatheadminnow) #Significant
+kruskal.test(Survival ~ Tox_conc, data=Rainbowtrout16) # error = not
+kruskal.test(Survival ~ Tox_conc, data=Rainbowtrout18) #not
+kruskal.test(Survival ~ Tox_conc, data=Midge) #Significant
+```
+
+```{r}
+pairwise.wilcox.test(Midge$Survival,
+                     Midge$Tox_conc,
+                     p.adjust.method = "BH")
+
+pairwise.wilcox.test(Fatmucket15$Survival,
+                     Fatmucket15$Tox_conc,
+                     p.adjust.method = "BH")
+
+```
+
+```{r}
+dunnTest(Tox_conc ~ Survival, data=Midge, method = "bonferroni")
 ```
 
 ```{r}
