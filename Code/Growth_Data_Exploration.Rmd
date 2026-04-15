@@ -317,6 +317,7 @@ mdg2 = rnorm(48, mean=9.208333, sd=1.486941)
 t.test(mdg1, mdg2, var.equal = T)
 
 ```
+
 ```{r}
 shapiro.test(ToxGrowth$Tox_conc) #significant
 levene.test(ToxGrowth$Tox_conc, ToxGrowth$Survival) #significant
@@ -360,7 +361,7 @@ kruskal.test(Survival ~ Tox_conc, data=Midge) #Significant
 ```{r}
 
 pairwise.t.test(Fatmucket15$Survival, Fatmucket15$Tox_conc, p.adjust.method = "bonferroni")
-pairwise.t.test(Fatmucket16$Survival, Fatmucket16$Tox_conc, p.adjust.method = "bonferroni")
+#pairwise.t.test(Fatmucket16$Survival, Fatmucket16$Tox_conc, p.adjust.method = "bonferroni")
 pairwise.t.test(Rainbowmussel$Survival, Rainbowmussel$Tox_conc, p.adjust.method = "bonferroni")
 pairwise.t.test(Fatheadminnow$Survival, Fatheadminnow$Tox_conc, p.adjust.method = "bonferroni")
 pairwise.t.test(Midge$Survival, Midge$Tox_conc, p.adjust.method = "bonferroni")
