@@ -7,8 +7,11 @@ Agricultural and industrial runoff are a near-constant threat to ecosystem healt
 
 ## Structure
 All raw data is kept within the Data folder
+
 All r markdowns are kept within the Code folder
+
 Important documents that were worked on through google docs, sheets, and slides have been uploaded to the Google Drive file
+
 Approach and problem file contains original planning and initial exploration
 
 ## Contributions
@@ -16,11 +19,14 @@ The group aspect of the project is important to the team and many of commits wer
 
 #### Communication
 Writing was mainly completed by Ema and Matt
+
 Graphics, organization, and revisions/editing was mainly completed by George
 
 #### Data
 Growth and length datasets were mainly analyzed by Ema
+
 Survival dataset was mainly analyzed by Matt
+
 Metamorphosis dataset was mainly analyzed by George
 
 ## Figure Example
