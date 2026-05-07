@@ -15,7 +15,7 @@ Important documents that were worked on through google docs, sheets, and slides 
 Approach and problem file contains original planning and initial exploration
 
 ## Contributions
-The group aspect of the project is important to the team and many of commits were worked on by multiple individuals at one point, even if only commited by one device
+The group aspect of the project is important to the team and many of commits were worked on by multiple individuals at one point, even if only commited by one device.
 
 #### Communication
 Writing was mainly completed by Ema and Matt
