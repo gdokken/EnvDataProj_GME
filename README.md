@@ -14,7 +14,7 @@ Approach and problem file contains original planning and initial exploration
 
 Important documents that were worked on through google docs, sheets, and slides have been uploaded to the Google Drive file
 
-Presentation includes the link to the final slides presented on SSRD
+Presentation file includes the link to the final slides presented on SSRD
 
 ## Contributions
 The group aspect of the project is important to the team and many of commits were worked on by multiple individuals at one point, even if only commited by one device.
